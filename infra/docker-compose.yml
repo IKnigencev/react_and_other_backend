@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  db_pg:
+    image: postgres:13.0-alpine
+    restart: always
+    volumes:
+      - db_value:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+  backend_node:
+    build:
+      context: ../backends/nodejs
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db_pg
+    env_file:
+      - ./.env
+  # frontend:
+  #   build:
+  #     context: ../frontend
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   volumes:
+  #     - frontend_path:/app/result_build
+
+volumes:
+  db_value:
