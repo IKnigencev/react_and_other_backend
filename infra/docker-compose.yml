@@ -14,18 +14,20 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "3001:3001"
+      - "3002:3002"
     depends_on:
       - db_pg
     env_file:
       - ./.env
-  # frontend:
-  #   build:
-  #     context: ../frontend
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   volumes:
-  #     - frontend_path:/app/result_build
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend_node
 
 volumes:
   db_value:
